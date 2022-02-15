@@ -1,11 +1,9 @@
-from pyspectra.readers.read_spc import read_spc_dir
-import matplotlib.pyplot as plt
+import spc
+import pandas as pd
+import numpy as np
 
-df_spc, dict_spc=read_spc_dir('Spectra')
-df_spc.transpose()
-f, ax =plt.subplots(1, figsize=(18,8))
-ax.plot(df_spc.transpose())
-plt.xlabel("nm")
-plt.ylabel("Abs")
-ax.legend(labels= list(df_spc.transpose().columns))
-plt.show()
+f = spc.File('Spectra/Sample 1.spc')  # read file
+
+file = f.data_txt()  # output data
+df_in_one_go=pd.DataFrame(np.array([f.sub[0].y,f.sub[1].y,f.sub[2].y]),columns=f.x)
+print(df_in_one_go)
